@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Student(models.Model):
@@ -29,3 +30,14 @@ class Course(models.Model):
     
     class Meta:
         ordering = ['title']
+
+class Qualification(models.Model):
+    
+    score = models.IntegerField(
+        validators = [MinValueValidator(0), MaxValueValidator(20)]
+    , blank=False)
+    course_q = models.ForeignKey(Course, on_delete=models.CASCADE, blank=False)
+    student_q = models.ForeignKey(Student, on_delete=models.CASCADE, blank=False)
+    
+    def __str__(self):
+    	return f"Nota: {self.score} - Estudiante: {self.student_q} - Curso: {self.course_q}"

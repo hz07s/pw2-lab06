@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Student
-from .forms import InsertStudentForm, InsertCourseForm
+from .forms import InsertStudentForm, InsertCourseForm, QualificationForm
 
 # Create your views here.
 def insertStudent(request):
@@ -25,3 +25,14 @@ def insertCourse(request):
         'form': form
         }
     return render(request, 'insertCourse.html', context)
+
+def qualificationForm(request):
+    form = QualificationForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = QualificationForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'insertQualification.html', context)

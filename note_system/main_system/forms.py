@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student, Course
+from .models import Student, Course, Qualification
 
 class InsertStudentForm(forms.ModelForm):
     LEVEL_CHOICES = [
@@ -22,3 +22,11 @@ class InsertCourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['title', 'credits']
+        
+class QualificationForm(forms.ModelForm):
+    course_q = forms.ModelChoiceField(queryset=Course.objects.all(), empty_label="Seleccione un curso")
+    student_q = forms.ModelChoiceField(queryset=Student.objects.all(), empty_label="Seleccione un estudiante")
+
+    class Meta:
+        model = Qualification
+        fields = ['score', 'course_q', 'student_q']

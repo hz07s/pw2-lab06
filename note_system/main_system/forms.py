@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student
+from .models import Student, Course
 
 class InsertStudentForm(forms.ModelForm):
     LEVEL_CHOICES = [
@@ -17,3 +17,8 @@ class InsertStudentForm(forms.ModelForm):
         if commit:
             student.save()
         return student
+
+class InsertCourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['title', 'credits']
